@@ -7,6 +7,7 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.getDouble
 import at.petrak.hexcasting.api.casting.getEntity
 import at.petrak.hexcasting.api.casting.getInt
+import at.petrak.hexcasting.api.casting.getIntBetween
 import at.petrak.hexcasting.api.casting.getLivingEntityButNotArmorStand
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapImmuneEntity
@@ -32,7 +33,7 @@ class TimeStop: SpellAction {
         env: CastingEnvironment
     ): SpellAction.Result {
         val target = args.getLivingEntityButNotArmorStand(0, argc)
-        val time = args.getInt(1, argc)
+        val time = args.getIntBetween(1, 1,Int.MAX_VALUE, argc)
         env.assertEntityInRange(target)
 
         val targetMiddlePos = target.position().add(0.0, target.eyeHeight / 2.0, 0.0)
@@ -41,7 +42,7 @@ class TimeStop: SpellAction {
             throw TimeStopException("Time has been stopped.")
         }
 
-        if (time < 0) {
+        if (time < 1) {
             throw NumberFormatException("Time must be a positive value: $time.")
         }
 
