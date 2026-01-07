@@ -1,6 +1,8 @@
-package example.examplemod
+package io.github.riiimc.hexex
 
-import example.examplemod.block.ModBlocks
+import io.github.riiimc.hexex.common.modules.hexex.HexEXRegistries
+import io.github.riiimc.hexex.common.modules.tconstruct.TConstructModule
+import io.github.riiimc.hexex.common.utils.ModListUtil
 import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
@@ -18,18 +20,22 @@ import thedarkcolour.kotlinforforge.forge.runForDist
  *
  * An example for blocks is in the `blocks` package of this mod.
  */
-@Mod(ExampleMod.ID)
-object ExampleMod {
-    const val ID = "examplemod"
+@Mod(HexEX.MODID)
+object HexEX {
+    const val MODID = "hexex"
 
     // the logger for our mod
-    val LOGGER: Logger = LogManager.getLogger(ID)
+    val LOGGER: Logger = LogManager.getLogger(MODID)
 
     init {
         LOGGER.log(Level.INFO, "Hello world!")
 
         // Register the KDeferredRegister to the mod-specific event bus
-        ModBlocks.REGISTRY.register(MOD_BUS)
+        HexEXRegistries.ITEM.register(MOD_BUS)
+        HexExConfig.registerConfig()
+        if (ModListUtil.TinkerLoaded) {
+            TODO()
+        }
 
         val obj = runForDist(
             clientTarget = {
